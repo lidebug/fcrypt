@@ -1,0 +1,21 @@
+{
+  "name": "fcrypt",
+  "version": "1.0.0",
+  "description": "Encryption and decryption files and folders",
+  "scripts": {
+    "test": "echo \"created by lidebug\""
+  },
+  "author": {
+    "name": "Li Debug",
+    "email": "returninfinity8@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lidebug/fcrypt.git"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "yauzl": "2.8.0",
+    "yazl": "2.4.2"
+  }
+}
