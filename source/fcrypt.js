@@ -8,21 +8,7 @@ var yauzl = require("yauzl");
 var stream = require("stream");
 var crypto = require("crypto");
 
-function encrypt(key, input, output) {
-  var encrypt = crypto.createCipher("aes256", key);
-  fs.createReadStream(input)
-    .pipe(encrypt)
-    .pipe(fs.createWriteStream(output))
-  ;
-}
-
-function decrypt(key, input, output) {
-  var decrypt = crypto.createDecipher("aes256", key);
-  fs.createReadStream(input)
-    .pipe(decrypt)
-    .pipe(fs.createWriteStream(output))
-  ;
-}
+var makedir = require("./makedir.js");
 
 function encrypt(param) {
   //include:
@@ -31,6 +17,9 @@ function encrypt(param) {
   //  param.output
   //  param.name
   //  param.callback
+
+  //create output folder, if it doesn't exist
+  makedir(path.dirname(param.output));
 
   //create ecryptor pipe
   var encrypt = crypto.createCipher("aes256", param.key);
@@ -69,14 +58,24 @@ function decrypt(param) {
   //  param.output
   //  param.callback
 
+  //create output folder, if it doesn't exist
+  makedir(param.output);
+
   //create deryptor pipe
   var decrypt = crypto.createDecipher("aes256", param.key);
 
   //import file from archive
   var importEntry = (zipfile, entry) => {
+    //full path to file
     var outputPath = path.join( param.output, entry.fileName);
+
+    //delete file if it already exists
+    if (fs.existsSync(outputPath)) fs.unlink(outputPath);
+
+    //if it folder:
     if (/\/$/.test(entry.fileName)) return; //folders not available...
 
+    //if it file:
     zipfile.openReadStream(entry, (err, readStream) => {
       if (err) throw err;
       readStream.on("end", () => {
@@ -84,9 +83,6 @@ function decrypt(param) {
       });
       readStream
         .pipe(fs.createWriteStream(outputPath))
-        .on("close", () => {
-          param.callback();
-        })
       ;
     });
   };
@@ -112,6 +108,9 @@ function decrypt(param) {
   fs.createReadStream(param.input)
     .pipe(decrypt)
     .pipe(decompress)
+    .end(() => {
+      param.callback();
+    });
   ;
 }
 

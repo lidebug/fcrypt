@@ -1,5 +1,5 @@
 # fcrypt
-### v1.0.0 ( last update: 25 may 2017 )
+### v1.0.1 ( last update: 26 may 2017 )
 
 Encryption and decryption files and folders.
 
