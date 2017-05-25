@@ -86,31 +86,25 @@ function decrypt(param) {
       ;
     });
   };
-  // yauzl.open(param.input, { lazyEntries: true }, (err, zipfile) => {
-  //   if (err) throw err;
-  //   zipfile.readEntry();
-  //   zipfile.on("entry", importEntry);
-  // });
 
   //decompress pipe
   var decompress = new stream.Transform();
   decompress._transform = (buffer, enc, cb) => {
     yauzl.fromBuffer(buffer, { lazyEntries: true }, (err, zipfile) => {
       if (err) throw err;
+      var totalFilesExported = 0; //How much files was exported
       zipfile.readEntry();
       zipfile.on("entry", (entry) => {
         importEntry(zipfile, entry);
       });
+      zipfile.on("end", () => param.callback() );
     });
   };
 
-  //Open encrypted file, decrypt it, and decompress
+  //Open encrypted file, decrypt it and decompress
   fs.createReadStream(param.input)
     .pipe(decrypt)
     .pipe(decompress)
-    .end(() => {
-      param.callback();
-    });
   ;
 }
 

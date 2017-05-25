@@ -1,3 +1,8 @@
+## v1.0.2
+26 may 2017
+
+* decrypt callback fixed
+
 ## v1.0.1
 26 may 2017
 
