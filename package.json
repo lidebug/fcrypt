@@ -21,7 +21,7 @@
     "zip",
     "archive",
     "folder",
-    "directory"
+    "directory",
     "file"
   ],
   "license": "MIT",
