@@ -118,7 +118,7 @@ function decrypt(param) {
 
   //create ecryptor pipe
   try {
-    var encrypt = crypto.createCipher(param.method, param.key);
+    var decrypt = crypto.createDecipher(param.method, param.key);
   }
   catch (err) {
 
@@ -131,8 +131,13 @@ function decrypt(param) {
   }
 
   //Decrypt and uncompress
-  fs.createReadStream(param.input)
+  var readStream = fs.createReadStream(param.input);
+  readStream
     .pipe(decrypt)
+    .on("error", (err) => {
+      errors.addError("Key is incorrect", 303);
+      readStream.destroy();
+    })
     .pipe(unzipper.Extract({ path: param.output }))
     .on("error", (err) => {
       errors.addError("Key is incorrect", 303);
