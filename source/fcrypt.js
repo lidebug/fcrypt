@@ -3,11 +3,9 @@
 
 var path = require("path");
 var fs = require("fs");
-var yazl = require("yazl");
-var yauzl = require("yauzl");
-var unzipper = require("unzipper");
-var stream = require("stream");
-var crypto = require("crypto");
+var yazl = require("yazl"); //compressing
+var unzipper = require("unzipper"); //uncompressing
+var crypto = require("crypto"); //encryption and decryption
 var js = require("libraryjs");
 
 var makedir = require("./makedir.js");
