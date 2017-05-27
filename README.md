@@ -20,7 +20,7 @@ fcrypt.encrypt({
   input: "./src/private",
   output: "./src/dest/private.data",
   callback: (errors) => {
-    if (errors.error) {
+    if (errors.exists) {
       errors.console();
       return;
     }
