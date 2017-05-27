@@ -1,6 +1,6 @@
 {
   "name": "fcrypt",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "Encryption and decryption files and folders",
   "scripts": {
     "test": "echo \"created by lidebug\""
@@ -13,9 +13,21 @@
     "type": "git",
     "url": "https://github.com/lidebug/fcrypt.git"
   },
+  "keywords": [
+    "encrypt",
+    "decrypt",
+    "compress",
+    "uncompress",
+    "zip",
+    "archive",
+    "folder",
+    "directory"
+    "file"
+  ],
   "license": "MIT",
   "dependencies": {
-    "yauzl": "2.8.0",
+    "libraryjs": "1.2.1",
+    "unzipper": "0.8.8",
     "yazl": "2.4.2"
   }
 }
