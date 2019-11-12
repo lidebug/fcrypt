@@ -25,7 +25,7 @@ function existTree(fullpath, callback) {
 function makedirTree(fullpath) {
   existTree(fullpath, (exists, dirpath) => {
     if (exists) return;
-    fs.mkdir(dirpath);
+    fs.mkdirSync(dirpath);
   });
 }
 
